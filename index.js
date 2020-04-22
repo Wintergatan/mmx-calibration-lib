@@ -6,15 +6,21 @@ const convertToMidi = require('./lib/convertToMidi').default;
 
 console.log("Wintergatan Programming templates converter");
 console.log("===========================================");
-if (argv._.length !== 1 || (!argv.svg && !argv.midi)) {
-  console.log("Usage: node index.js input.csv --svg output.svg --midi output.midi");
-  console.log("You can either supply svg, midi or both.");
+if (argv._.length !== 1 || (!argv.svg && !argv.dxf && !argv.midi)) {
+  console.log("Usage: node index.js input.csv --svg output.svg --dxf output.dxf --midi output.midi");
+  console.log("You can either supply svg, dxf, midi or all three.");
 } else {
   parse(argv._[0], musicData => {
-    if (argv.svg) {
-      const svg = draw(musicData);
-      fs.writeFileSync(argv.svg, svg)
-      console.log("SVG written to '" + argv.svg + "'");
+    if (argv.svg || argv.dxf) {
+      const drawing = draw(musicData);
+      if(argv.svg){
+        fs.writeFileSync(argv.svg, drawing.svg)
+        console.log("SVG written to '" + argv.svg + "'");
+      }
+      if(argv.dxf){
+        fs.writeFileSync(argv.dxf, drawing.dxf)
+        console.log("DXF written to '" + argv.dxf + "'");
+      }
     }
     if (argv.midi) {
       const midi = convertToMidi(musicData);
