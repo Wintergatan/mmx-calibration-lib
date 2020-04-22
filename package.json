@@ -12,6 +12,7 @@
   "dependencies": {
     "csv-parser": "^2.3.2",
     "makerjs": "^0.17.0",
-    "midi-writer-js": "^1.7.2"
+    "midi-writer-js": "^1.7.2",
+    "minimist": "^1.2.5"
   }
 }
